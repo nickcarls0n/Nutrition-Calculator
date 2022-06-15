@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import NutritionChart from "./components/NutritionChart";
+import LabeledInput from "./components/LabeledInput";
+import Radio from "./components/Radio";
+import ActivitySlider from "./components/ActivitySlider";
 
 import "./App.scss";
 
@@ -16,7 +19,7 @@ function App() {
   const [error, setError] = useState(false);
 
   const handleSubmit = () => {
-    if (weight == 0 || height == 0 || age == 0 || gender == "") {
+    if (weight == 0 || height == 0 || age == 0) {
       setError(true);
     } else {
       if (lbsOrKg === "lbs") {
@@ -51,137 +54,129 @@ function App() {
 
   console.log(weight, height);
   return (
-    <div className="App">
-      <h1>Nutrient Calculator</h1>
-      <form>
-        <label htmlFor="weight">Weight</label>
-        <input
-          type="number"
-          id="weight"
-          onChange={(e) => setWeight(Number(e.target.value))}
-        />
-        <br />
-        <div className="weightRadio">
-          <label htmlFor="kg">Kg</label>
-          <input
-            type="radio"
-            id="kg"
-            name="weightRadio"
-            onChange={() => setLbsOrKg("kg")}
-            checked
-          />
-          <label htmlFor="lb">lb</label>
-          <input
-            type="radio"
-            id="lb"
-            name="weightRadio"
-            onChange={() => setLbsOrKg("lbs")}
-          />
+    <div className="app-background">
+      <div className="container">
+        <div className="row">
+          <div className="col app-wrapper">
+            <h1>Nutrient Calculator</h1>
+            <div className="row">
+              <div className="col-6">
+                <form>
+                  <h4>Enter Your Information</h4>
+                  <LabeledInput
+                    id="weight"
+                    labelText="Weight"
+                    onChange={(e) => setWeight(Number(e.target.value))}
+                  />
+                  <div className="d-flex">
+                    <Radio
+                      id="kg"
+                      name="weightRadio"
+                      labelText="Kg"
+                      onChange={() => setLbsOrKg("kg")}
+                    />
+                    <Radio
+                      id="lb"
+                      name="weightRadio"
+                      labelText="lb"
+                      onChange={() => setLbsOrKg("lbs")}
+                    />
+                  </div>
+
+                  <LabeledInput
+                    id="height"
+                    labelText="Height"
+                    onChange={(e) => setHeight(Number(e.target.value))}
+                  />
+
+                  <div className="d-flex">
+                    <Radio
+                      id="cm"
+                      name="heightRadio"
+                      labelText="cm"
+                      onChange={() => setInOrCm("cm")}
+                    />
+                    <Radio
+                      id="in"
+                      name="heightRadio"
+                      labelText="in"
+                      onChange={() => setInOrCm("in")}
+                    />
+                  </div>
+
+                  <LabeledInput
+                    id="age"
+                    labelText="Age"
+                    onChange={(e) => setAge(Number(e.target.value))}
+                  />
+
+                  <div className="d-flex">
+                    <Radio
+                      id="male"
+                      name="gender"
+                      labelText="Male"
+                      onChange={() => setGender("male")}
+                    />
+                    <Radio
+                      id="female"
+                      name="gender"
+                      labelText="Female"
+                      onChange={() => setGender("female")}
+                    />
+                  </div>
+
+                  <div className="weightGoals">
+                    <h4>Weight loss Goals</h4>
+                    <div className="d-flex">
+                      <Radio
+                        id="cut"
+                        name="goals"
+                        labelText="Cut"
+                        onChange={() => setGoal(0.2)}
+                      />
+                      <Radio
+                        id="maintain"
+                        name="goals"
+                        labelText="Maintain"
+                        onChange={() => setGoal(0)}
+                      />
+                      <Radio
+                        id="gain"
+                        name="goals"
+                        labelText="Gain"
+                        onChange={() => setGoal(0.15)}
+                      />
+                    </div>
+                  </div>
+
+                  <p>Activity Level</p>
+                  <ActivitySlider
+                    onChange={(e) => setActivity(Number(e.target.value))}
+                  />
+
+                  {error == true && <p>Please fill out all fields.</p>}
+                  <button type="button" onClick={handleSubmit}>
+                    Calculate
+                  </button>
+                </form>
+              </div>
+              <div className="col-6">
+                <p>BMR: {bmr}</p>
+                <p>TDEE: {tdee}</p>
+                <p>Calories From Protein: {protein}</p>
+                <p>Calories From Carbohydrates: {carbs}</p>
+                <p>Calories From Fat: {fats}</p>
+                <NutritionChart
+                  total={tdee}
+                  protein={protein}
+                  carbs={carbs}
+                  fats={fats}
+                />
+              </div>
+            </div>
+          </div>
         </div>
-        <label htmlFor="height">Height</label>
-        <input
-          type="number"
-          id="height"
-          onChange={(e) => setHeight(Number(e.target.value))}
-        />
-        <br />
-        <div className="heightRadio">
-          <label htmlFor="cm">cm</label>
-          <input
-            type="radio"
-            id="cm"
-            name="heightRadio"
-            onChange={() => setInOrCm("cm")}
-            checked
-          />
-          <label htmlFor="in">in</label>
-          <input
-            type="radio"
-            id="in"
-            name="heightRadio"
-            onChange={() => setInOrCm("in")}
-          />
-        </div>
-        <label htmlFor="age">Age</label>
-        <input
-          type="number"
-          id="age"
-          onChange={(e) => setAge(Number(e.target.value))}
-        />
-        <br />
-
-        <div className="genderRadio">
-          <label htmlFor="gender">Male</label>
-          <input
-            type="radio"
-            id="male"
-            name="gender"
-            onChange={() => setGender("male")}
-          />
-          <label htmlFor="female">Female</label>
-          <input
-            type="radio"
-            id="female"
-            name="gender"
-            onChange={() => setGender("female")}
-          />
-          <br />
-        </div>
-
-        <div className="weightGoals">
-          <p>Weight loss Goals</p>
-          <label htmlFor="cut">Cut</label>
-          <input
-            type="radio"
-            id="cut"
-            name="goals"
-            onChange={() => setGoal(0.2)}
-          />
-          <label htmlFor="maintain">Maintain</label>
-          <input
-            type="radio"
-            id="maintain"
-            name="goals"
-            onChange={() => setGoal(0)}
-            checked
-          />
-          <label htmlFor="gain">Gain</label>
-          <input
-            type="radio"
-            id="gain"
-            name="goals"
-            onChange={() => setGoal(0.15)}
-          />
-        </div>
-
-        <label htmlFor="activity-level">Activity Level</label>
-        <input
-          type="range"
-          id="activity-level"
-          min="1.2"
-          max="1.725"
-          step="0.13"
-          onChange={(e) => setActivity(Number(e.target.value))}
-        />
-        <br />
-
-        {error == true && <p>Please fill out all fields.</p>}
-        <button type="button" onClick={handleSubmit}>
-          Calculate
-        </button>
-      </form>
-
-      <p>BMR: {bmr}</p>
-      <p>TDEE: {tdee}</p>
-      <p>Calories From Protein: {protein}</p>
-      <p>Calories From Carbohydrates: {carbs}</p>
-      <p>Calories From Fat: {fats}</p>
-      <NutritionChart
-        total={tdee}
-        protein={protein}
-        carbs={carbs}
-        fats={fats}
-      />
+      </div>
     </div>
   );
 }

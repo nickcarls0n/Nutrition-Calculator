@@ -1,0 +1,16 @@
+.app-background {
+  background-image: url(../public/img/nutrition-calculator-bg.jpg);
+}
+
+.app-wrapper {
+  background-color: rgba(242, 242, 242, 0.8);
+  padding: 40px;
+  border-radius: 3%;
+  margin: 60px;
+  box-shadow: -5px 5px 20px 0px rgba(0, 0, 0, 0.3);
+
+  h1 {
+    text-align: center;
+    color: #400702;
+  }
+}
