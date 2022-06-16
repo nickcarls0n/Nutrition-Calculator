@@ -57,7 +57,7 @@ function App() {
       <div className="container">
         <div className="row">
           <div className="col app-wrapper">
-            <h1>Nutrient Calculator</h1>
+            <h1>Macro Nutrient Calculator</h1>
             <div className="row">
               <div className="col-md-6">
                 <form>
