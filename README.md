@@ -9,12 +9,13 @@ This is a nutrition calculator that takes `weight`, `height`, `age`, `gender` an
 - I used [Create React App](https://github.com/facebook/create-react-app) as a boilerplate
 - [Rechats](https://recharts.org/en-US/) is a great way to incorporate a chart in this project to help the user visualize the data presented.
 - I am using the React hook `useState` for state management.
-- I ran into a dependency conflict using `Recharts` and `styled-components`, so styling is handled with css modules to prevent class name conflicts.
+- I ran into a dependency conflict using `Recharts` and `styled-components`, so styling is handled with scss.
 - The responsive column layout is handled using [Bootstrap](https://getbootstrap.com/)
 
 ## If I had had more time...
 
-It would be great to set this up with with a user login and a database to store user information such as daily calorie intake, wight and recommended calorie intake. This data then could be tracked over time and presented in the form of a graph, so the user could chart their weight loss/gain goals.
+- It would be great to set this up with with a user login and a database to store user information such as daily calorie intake, wight and recommended calorie intake. This data then could be tracked over time and presented in the form of a graph, so the user could chart their weight loss/gain goals.
+- I will keep trying to figure out away to resolve the `Rechats` and `styled-component` conflict.
 
 ## Available Scripts
 
