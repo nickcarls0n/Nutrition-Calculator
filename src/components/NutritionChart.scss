@@ -1,0 +1,8 @@
+.chart-wrapper {
+  height: 375px;
+  margin-top: "24px";
+
+  @media (min-width: 768px) {
+    height: 375px;
+  }
+}

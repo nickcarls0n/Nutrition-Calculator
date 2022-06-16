@@ -7,7 +7,10 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  ResponsiveContainer,
 } from "recharts";
+
+import "./NutritionChart.scss";
 
 interface NutritionChartProps {
   total?: number;
@@ -37,24 +40,28 @@ const NutritionChart = (props: NutritionChartProps) => {
   ];
 
   return (
-    <BarChart
-      width={500}
-      height={300}
-      data={data}
-      margin={{
-        top: 5,
-        right: 30,
-        left: 20,
-        bottom: 5,
-      }}
-    >
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" />
-      <YAxis />
-      <Tooltip />
-      <Legend />
-      <Bar dataKey="Calories" fill="#8C7608" />
-    </BarChart>
+    <div className="chart-wrapper">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart
+          width={500}
+          height={300}
+          data={data}
+          margin={{
+            top: 12,
+            right: 30,
+            left: -15,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="Calories" fill="#731a06" />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
   );
 };
 

@@ -9,26 +9,28 @@ import "./App.scss";
 function App() {
   const [weight, setWeight] = useState(0);
   const [height, setHeight] = useState(0);
-  const [lbsOrKg, setLbsOrKg] = useState("");
-  const [inOrCm, setInOrCm] = useState("");
+  const [lbsOrKg, setLbsOrKg] = useState("kg");
+  const [inOrCm, setInOrCm] = useState("cm");
   const [age, setAge] = useState(0);
   const [gender, setGender] = useState("");
-  const [goal, setGoal] = useState(0);
+  const [goal, setGoal] = useState(1);
   const [activity, setActivity] = useState(1.2);
   const [bmr, setBmr] = useState(0);
   const [error, setError] = useState(false);
 
   const handleSubmit = () => {
-    if (weight == 0 || height == 0 || age == 0) {
+    if (weight === 0 || height === 0 || age === 0) {
       setError(true);
+      return;
     } else {
+      setError(false);
       if (lbsOrKg === "lbs") {
         setWeight(weight / 2.205);
       }
       if (inOrCm === "in") {
         setHeight(height * 2.54);
       }
-      setError(false);
+
       calcBmr();
     }
   };
@@ -40,19 +42,16 @@ function App() {
     }
     if (gender === "female") {
       bmrMath = 10 * weight + 6.25 * height - 5 * age - 161;
-    } else {
-      setError(true);
     }
     bmrMath!! && setBmr(Math.round(bmrMath));
     return;
   };
 
-  let tdee = Math.round(bmr * activity);
+  let tdee = Math.round(bmr * activity * goal);
   let protein = Math.round(tdee * 0.35);
   let carbs = Math.round(tdee * 0.4);
   let fats = Math.round(tdee * 0.25);
 
-  console.log(weight, height);
   return (
     <div className="app-background">
       <div className="container">
@@ -60,7 +59,7 @@ function App() {
           <div className="col app-wrapper">
             <h1>Nutrient Calculator</h1>
             <div className="row">
-              <div className="col-6">
+              <div className="col-md-6">
                 <form>
                   <h4>Enter Your Information</h4>
                   <LabeledInput
@@ -72,14 +71,18 @@ function App() {
                     <Radio
                       id="kg"
                       name="weightRadio"
+                      value="kg"
                       labelText="Kg"
-                      onChange={() => setLbsOrKg("kg")}
+                      onChange={(e) => setLbsOrKg(e.target.value)}
+                      checked={lbsOrKg == "kg"}
                     />
                     <Radio
                       id="lb"
                       name="weightRadio"
+                      value="lbs"
                       labelText="lb"
-                      onChange={() => setLbsOrKg("lbs")}
+                      onChange={(e) => setLbsOrKg(e.target.value)}
+                      checked={lbsOrKg == "lbs"}
                     />
                   </div>
 
@@ -93,14 +96,18 @@ function App() {
                     <Radio
                       id="cm"
                       name="heightRadio"
+                      value="cm"
                       labelText="cm"
-                      onChange={() => setInOrCm("cm")}
+                      onChange={(e) => setInOrCm(e.target.value)}
+                      checked={inOrCm == "cm"}
                     />
                     <Radio
                       id="in"
                       name="heightRadio"
+                      value="in"
                       labelText="in"
-                      onChange={() => setInOrCm("in")}
+                      onChange={(e) => setInOrCm(e.target.value)}
+                      checked={inOrCm == "in"}
                     />
                   </div>
 
@@ -114,14 +121,18 @@ function App() {
                     <Radio
                       id="male"
                       name="gender"
+                      value="male"
                       labelText="Male"
-                      onChange={() => setGender("male")}
+                      onChange={(e) => setGender(e.target.value)}
+                      checked={gender == "male"}
                     />
                     <Radio
                       id="female"
                       name="gender"
+                      value="female"
                       labelText="Female"
-                      onChange={() => setGender("female")}
+                      onChange={(e) => setGender(e.target.value)}
+                      checked={gender == "female"}
                     />
                   </div>
 
@@ -131,41 +142,62 @@ function App() {
                       <Radio
                         id="cut"
                         name="goals"
+                        value={0.8}
                         labelText="Cut"
-                        onChange={() => setGoal(0.2)}
+                        onChange={(e) => setGoal(e.target.value)}
+                        checked={goal == 0.8}
                       />
                       <Radio
                         id="maintain"
                         name="goals"
+                        value={1}
                         labelText="Maintain"
-                        onChange={() => setGoal(0)}
+                        onChange={(e) => setGoal(e.target.value)}
+                        checked={goal == 1}
                       />
                       <Radio
                         id="gain"
                         name="goals"
+                        value={1.15}
                         labelText="Gain"
-                        onChange={() => setGoal(0.15)}
+                        onChange={(e) => setGoal(e.target.value)}
+                        checked={goal == 1.15}
                       />
                     </div>
                   </div>
 
-                  <p>Activity Level</p>
+                  <p>
+                    <span>Activity Level</span>
+                  </p>
                   <ActivitySlider
                     onChange={(e) => setActivity(Number(e.target.value))}
                   />
 
-                  {error == true && <p>Please fill out all fields.</p>}
+                  {error == true && (
+                    <p className="error">* Please fill out all fields.</p>
+                  )}
                   <button type="button" onClick={handleSubmit}>
                     Calculate
                   </button>
                 </form>
               </div>
-              <div className="col-6">
-                <p>BMR: {bmr}</p>
-                <p>TDEE: {tdee}</p>
-                <p>Calories From Protein: {protein}</p>
-                <p>Calories From Carbohydrates: {carbs}</p>
-                <p>Calories From Fat: {fats}</p>
+
+              <div className="col-md-6">
+                <p>
+                  <span>BMR:</span> {bmr}
+                </p>
+                <p>
+                  <span>TDEE:</span> {tdee}
+                </p>
+                <p>
+                  <span>Calories From Protein:</span> {protein}
+                </p>
+                <p>
+                  <span>Calories From Carbohydrates:</span> {carbs}
+                </p>
+                <p>
+                  <span>Calories From Fat:</span> {fats}
+                </p>
                 <NutritionChart
                   total={tdee}
                   protein={protein}

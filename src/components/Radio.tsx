@@ -5,8 +5,10 @@ import "./Radio.scss";
 interface RadioProps {
   id: string;
   name: string;
+  value?: string | number;
   labelText: string;
   onChange: (e: any) => void;
+  checked?: boolean;
 }
 
 const Radio = (props: RadioProps) => {
@@ -17,7 +19,9 @@ const Radio = (props: RadioProps) => {
         type="radio"
         id={props.id}
         name={props.name}
+        value={props.value}
         onChange={props.onChange}
+        checked={props.checked}
       />
     </div>
   );
